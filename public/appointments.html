@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Phone Repair Appointment</title>
+</head>
+<body>
+  <h2>Book Appointment</h2>
+  <form action="/appointments" method="POST">
+    <input name="phoneModel" placeholder="Phone Model" required /><br />
+    <input name="issue" placeholder="Describe Issue" required /><br />
+    <input type="date" name="date" required /><br />
+    <button type="submit">Book</button>
+  </form>
+
+  <h2>Your Appointment History</h2>
+  <ul id="history"></ul>
+
+  <script>
+    fetch('/appointments')
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('history');
+        data.forEach(appt => {
+          const item = document.createElement('li');
+          item.innerText = `${appt.date.substring(0,10)} | ${appt.phoneModel} - ${appt.issue}`;
+          list.appendChild(item);
+        });
+      });
+  </script>
+
+  <br><a href="/dashboard.html">⬅ Back to Dashboard</a>
+</body>
+</html>
